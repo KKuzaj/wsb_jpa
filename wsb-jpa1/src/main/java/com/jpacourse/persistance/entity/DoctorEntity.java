@@ -4,9 +4,14 @@ import com.jpacourse.persistance.enums.Specialization;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "DOCTOR")
 public class DoctorEntity {
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<VisitEntity> visitEntitylist;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,49 +1,35 @@
-package com.jpacourse.persistance.entity;
+package com.jpacourse.dto;
 
-import jakarta.persistence.*;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "PATIENT")
-public class PatientEntity {
+public class PatientTO implements Serializable {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private String telephoneNumber;
 
     private String email;
 
-    @Column(nullable = false)
     private String patientNumber;
 
-    @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column
     private Boolean insured;
 
-    @OneToMany(mappedBy = "patientEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<AddressEntity> addressEntities;
-
-    @OneToMany(mappedBy = "patientEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<VisitEntity> visitEntityList;
+    private List<VisitTO> visits;
 
     public Long getId() {
         return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -98,27 +84,19 @@ public class PatientEntity {
         return insured;
     }
 
-    public void setInsured(boolean insured) {
+    public void setInsured(Boolean insured) {
         this.insured = insured;
     }
 
-    public List<AddressEntity> getAddressEntities() {
-        return addressEntities;
+    public List<VisitTO> getVisits() {
+        return visits;
     }
 
-    public void setAddressEntities(List<AddressEntity> addressEntities) {
-        this.addressEntities = addressEntities;
+    public void setVisits(List<VisitTO> visits) {
+        this.visits = visits;
     }
 
-    public List<VisitEntity> getVisitEntityList() {
-        return visitEntityList;
-    }
 
-    public void setVisitEntityList(List<VisitEntity> visitEntityList) {
-        this.visitEntityList = visitEntityList;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
+
+

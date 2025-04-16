@@ -19,6 +19,12 @@ public class AddressEntity {
 
 	private String postalCode;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id")
+	private PatientEntity patientEntity;
+
+
+
 	public Long getId() {
 		return id;
 	}

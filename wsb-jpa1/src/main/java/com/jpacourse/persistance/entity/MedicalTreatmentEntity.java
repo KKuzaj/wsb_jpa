@@ -18,6 +18,10 @@ public class MedicalTreatmentEntity {
 	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_id")
+	private VisitEntity visitEntity;
+
 	public Long getId() {
 		return id;
 	}
