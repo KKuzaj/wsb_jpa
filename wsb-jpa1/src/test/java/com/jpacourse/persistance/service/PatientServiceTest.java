@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -31,12 +33,12 @@ public class PatientServiceTest {
 
         assertThat(patientTO).isNotNull();
         assertThat(patientTO.getFirstName()).isEqualTo("Anna");
-        assertThat(patientTO.isInsured()).isTrue(); // sprawdzenie pola insured
+        assertThat(patientTO.isInsured()).isTrue();
 
-        assertThat(patientTO.getVisits()).hasSize(1);
+        assertThat(patientTO.getVisits()).hasSize(101);
         VisitTO visitTO = patientTO.getVisits().get(0);
-        assertThat(visitTO.getDoctorFirstName()).isEqualTo("Adam");
-        assertThat(visitTO.getTreatmentTypes()).containsExactly("Terapia manualna");
+        assertThat(visitTO.getDoctorFirstName()).isEqualTo("Jan");
+        assertThat(visitTO.getTreatmentTypes()).containsExactly("Konsultacja pediatryczn");
     }
 
     @Test
@@ -56,9 +58,10 @@ public class PatientServiceTest {
         // assertThat(visit.getId()).isNull(); // wizyta powinna być usunięta
 
         // Lekarz pozostaje w bazie (nie jest usunięty)
-       // assertThat(doctor.getFirstName()).isEqualTo("Ewa");
+        // assertThat(doctor.getFirstName()).isEqualTo("Ewa");
 
         // Sprawdzamy, czy pobranie pacjenta po ID zwraca null
         assertThat(patientService.findById(patientId)).isNull();
     }
+
 }

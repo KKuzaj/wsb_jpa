@@ -7,8 +7,10 @@ import com.jpacourse.persistance.entity.VisitEntity;
 import jakarta.persistence.NoResultException;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
@@ -46,5 +48,28 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
         patient.getVisitEntityList().add(visit);
 
         entityManager.merge(patient); // zapis kaskadowy
+    }
+
+    @Override
+    public List<PatientEntity> findByName(String name) {
+        return entityManager.createQuery("SELECT patient FROM PatientEntity patient " +
+                        "WHERE patient.lastName LIKE :param1", PatientEntity.class)
+                .setParameter("param1", "%" + name + "%")
+                .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findPatientsWithMoreThanXVisits(long visitCount) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE SIZE(p.visitEntityList) > :count", PatientEntity.class)
+                .setParameter("count", (int) visitCount)
+                .getResultList();
+    }
+    @Override
+    public List<PatientEntity> findPatientsBornAfter(LocalDate date) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE p.dateOfBirth > :date", PatientEntity.class)
+                .setParameter("date", date)
+                .getResultList();
     }
 }

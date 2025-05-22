@@ -1,6 +1,8 @@
 package com.jpacourse.persistance.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,11 +37,17 @@ public class PatientEntity {
     @Column
     private Boolean insured;
 
+    @Version
+    private Integer version;
+
+    @OneToMany(mappedBy = "patientEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @Fetch(FetchMode.SELECT)
+    private List<VisitEntity> visitEntityList;
+
     @OneToMany(mappedBy = "patientEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AddressEntity> addressEntities;
 
-    @OneToMany(mappedBy = "patientEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<VisitEntity> visitEntityList;
 
     public Long getId() {
         return id;

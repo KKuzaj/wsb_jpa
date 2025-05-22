@@ -1,9 +1,12 @@
 package com.jpacourse.persistance.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "VISIT")
@@ -15,19 +18,22 @@ public class VisitEntity {
 
 	private String description;
 
+	private LocalDateTime time;
+
+	@Version
+	private Integer version;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "doctor_id")
 	private DoctorEntity doctorEntity;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	private List<MedicalTreatmentEntity> medicalTreatmentEntity;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id")
 	private PatientEntity patientEntity;
-
-	@Column(nullable = false)
-	private LocalDateTime time;
 
 	public Long getId() {
 		return id;
@@ -53,6 +59,14 @@ public class VisitEntity {
 		this.time = time;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public DoctorEntity getDoctorEntity() {
 		return doctorEntity;
 	}
@@ -75,5 +89,8 @@ public class VisitEntity {
 
 	public void setPatientEntity(PatientEntity patientEntity) {
 		this.patientEntity = patientEntity;
+	}
+
+	public void setVisitDate(LocalDate now) {
 	}
 }

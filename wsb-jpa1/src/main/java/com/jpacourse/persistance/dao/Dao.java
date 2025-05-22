@@ -1,6 +1,9 @@
 package com.jpacourse.persistance.dao;
 
+import com.jpacourse.persistance.entity.PatientEntity;
+
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface Dao<T, K extends Serializable> {
@@ -24,4 +27,6 @@ public interface Dao<T, K extends Serializable> {
     long count();
 
     boolean exists(K id);
+
+    List<PatientEntity> findPatientsBornAfter(LocalDate date);
 }

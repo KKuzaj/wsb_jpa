@@ -12,6 +12,8 @@ public class VisitTO implements Serializable {
 
     private String doctorLastName;
 
+    private String patientFirstName; 
+
     private List<String> treatmentTypes;
 
     public LocalDateTime getTime() {
